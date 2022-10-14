@@ -6,17 +6,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>练习</title>
     <style>
-      input{
-        outline:none;
+      /* 实现文本框论库消失 */
+      input {
+        outline: none;
       }
-      textarea{
-        resize:none;
-         outline:none;
+      /* 防止拖拽 */
+      textarea {
+        resize: none;
+        outline: none;
       }
+      /* 实现图片的位置verticla-align  以及底部空白缝隙的问题*/
+      .nih {
+        border: 2px solid pink;
+        width: 150px;
+      }
+      img {
+        /* 模糊处理 */
+        filter: blur(1px);
+        vertical-align: bottom;
+      }
+      /* 多行文本省略 */
+      .three {
+        transform: rotate(45deg);
+        border: 2px solid pink;
+        width: 50px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* 弹性盒子模型显示 */
+        display: -webkit-box;
+        /* 子元素排列方式 */
+        -webkit-box-orient: vertical;
+        /* 限制显示文本行数 */
+        -webkit-line-clamp: 2;
+      }
+      /*  */
+      div p {
+        /*1.单词之间换行 */
+        /* word-wrap: break-word; */
+        /* 2.单词内换行 */
+        /* word-break:break-all; */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      /* 文本溢出 */
     </style>
   </head>
   <body>
-    <input type="text" name="" value="" class="none"/>
-    <textarea name="" id="" cols="30" rows="10"></textarea>
+    <!-- <input type="text" name="" value="" class="none" /> -->
+    <!-- <textarea name="" id="" cols="30" rows="10"></textarea> -->
+    一.文本省略号:
+    <div class="nih">
+      <img
+        src="./f85fbedb0a6bfebedba167791a816e1b36f757d9.jpg@96w_96h_1c_1s.webp"
+        alt=""
+      />
+      <p>
+        你hi是大陆和道德wqeqeqweqeqewqeqweqeq爱多久啊刘德华纳德拉很多克拉拉对海打击
+      </p>
+    </div>
+    <div class="three">
+      31231312313fdsafgf额撒旦艰苦哇好棒的房间里回复的物理
+    </div>
+    <!-- 视频播放属性:poster(预加载图片)muted(静音) -->
+    二.视频:<br />
+    <video
+      controls
+      width="300px"
+      height="150"
+      muted
+      autoplay
+      poster="./f85fbedb0a6bfebedba167791a816e1b36f757d9.jpg@96w_96h_1c_1s.webp"
+    >
+      <source src="3e31d113a0117f9c5f5e2febc5c1fa2d.m4" type="video/mp4" />
+    </video>
+    <br />
+    三.新增表单
+    <form action="">
+      <!-- 自动获得焦点autofocus   记录关闭autocomplete  必选项:required-->
+      <!--修改placehodler样式
+      input::placeholder{
+        
+      }
+      -->
+      <input
+        type="email"
+        name=""
+        value=""
+        placeholder=""
+        autofocus="autofocus"
+        autocomplete="off"
+      />
+      <input type="url" name="" value="" placeholder="" />
+      <input type="data" name="" value="" placeholder="" />
+      <input type="time" name="" value="" placeholder="" />
+      <input type="month" name="" value="" placeholder="" />
+      <input type="week" name="" value="" placeholder="" />
+      <input type="number" name="" value="" placeholder="" />
+      <input type="tel" name="" value="" placeholder="" />
+      <input type="search" name="" value="" placeholder="" />
+      <!-- 多选文件 -->
+      <input type="file" name="" value="" placeholder="" multiple />
+      <input type="submit" name="" value="" placeholder="" />
+      <a href="tel:18824879094">手机</a>
+    </form>
+    <br />
+    四.CSS3滤镜filter <br />
+    <img
+      src="./f85fbedb0a6bfebedba167791a816e1b36f757d9.jpg@96w_96h_1c_1s.webp"
+      alt=""
+    />
   </body>
 </html>
