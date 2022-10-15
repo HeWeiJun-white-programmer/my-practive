@@ -18,4 +18,4 @@
 - transfrom:translate(x,y)移动
 - transfrom:rotat(数字 deg)旋转 小三角实例
 - transfrom:scale(x,y)缩放
-- 
+- animation:名字 延长时间  线性方式  开始时间   循环次数    
