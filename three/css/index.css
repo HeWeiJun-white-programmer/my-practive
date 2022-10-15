@@ -1,3 +1,9 @@
+/*
+ * @Author: 何伟骏 
+ * @Date: 2022-10-15 23:55:37 
+ * @Last Modified by:   何伟骏 
+ * @Last Modified time: 2022-10-15 23:55:37 
+ */
 .container {
   position: relative;
   width: 100px;
@@ -13,5 +19,6 @@
   transform: translate(-50%);
   border: 10px solid transparent;
   border-top-color: pink;
+  transform: translate(50%);
   color: white;
 }
