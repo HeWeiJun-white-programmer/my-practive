@@ -2,7 +2,7 @@
  * @Author: 何伟骏 
  * @Date: 2022-10-16 21:54:33 
  * @Last Modified by: 何伟骏
- * @Last Modified time: 2022-10-16 23:26:29
+ * @Last Modified time: 2022-10-17 00:13:40
  */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 * {
@@ -11,6 +11,8 @@
   padding: 0;
 }
 body {
+  height: 100vh;
+  overflow: hidden;
   background-color: #b510ca;
 }
 header {
@@ -95,17 +97,18 @@ header {
 .list span {
   color: #cccc;
 }
+/* 实现双向变化的关键是给要变化的dom元素，加一个父元素，并设置样式居中此时,width由50px伸长为200px，虽然还是往右伸长，但由于子元素始终保持居中，所以在视觉上看上去就呈现双向变化了。  */
 .search {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 200px;
+  /* width: 200px; */
   height: 50px;
   transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%);
-  -moz-transform: translate(-50%);
-  -ms-transform: translate(-50%);
-  -o-transform: translate(-50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
 }
 .search .input {
   height: 50px;
@@ -113,17 +116,36 @@ header {
   width: 50px;
   background-color: #fff;
   border: 0;
-  transition: width 0.3 ease;
-  -webkit-transition: width 0.3 ease;
-  -moz-transition: width 0.3 ease;
-  -ms-transition: width 0.3 ease;
-  -o-transition: width 0.3 ease;
+  transition: width 0.3s ease;
+  -webkit-transition: width 0.3s ease;
+  -moz-transition: width 0.3s ease;
+  -ms-transition: width 0.3s ease;
+  -o-transition: width 0.3s ease;
 }
 .search.active .input {
   width: 200px;
 }
+.search.active .btn {
+  transform: translate(198px);
+  -webkit-transform: translate(198px);
+  -moz-transform: translate(198px);
+  -ms-transform: translate(198px);
+  -o-transform: translate(198px);
+}
 .search .input {
   outline: none;
+}
+.search .input::-webkit-input-placeholder {
+  font-size: 18px;
+}
+.search .input::-moz-placeholder {
+  font-size: 18px;
+}
+.search .input:-ms-input-placeholder {
+  font-size: 18px;
+}
+.search .input::-ms-input-placeholder {
+  font-size: 18px;
 }
 .search .input::placeholder {
   font-size: 18px;
@@ -136,10 +158,9 @@ header {
   width: 50px;
   background-color: #fff;
   border: 0;
-}
-.search .btn i {
-  font-size: 28px;
-}
-.search .btn i::before {
-  content: '\f002';
+  transition: transform 0.3s ease;
+  -webkit-transition: transform 0.3s ease;
+  -moz-transition: transform 0.3s ease;
+  -ms-transition: transform 0.3s ease;
+  -o-transition: transform 0.3s ease;
 }
