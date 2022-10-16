@@ -5,15 +5,53 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
     <header>
-      <img src="./static/e161a4be981a737a34da0233f34bf66.jpg" alt="" title="海燕" width="300" height="100" />  
+      <div class="logo">
+        <img
+          src="./static/e161a4be981a737a34da0233f34bf66.jpg"
+          alt=""
+          title="海燕"
+          width="200"
+          height="100"
+        />
       </div>
-      <ul>
-        <li>English</li>
-        <li>搜索</li>
-      </ul>
-    </div></header>
+      <div class="nav">
+        <ul>
+          <li>首页</li>
+          <li>
+            我宝的照片
+            <ul>
+              <li>宝</li>
+              <li>海燕</li>
+              <li>伟俊</li>
+            </ul>
+          </li>
+
+          <li>海燕</li>
+          <li>关于我们</li>
+          <li>联系海燕</li>
+        </ul>
+      </div>
+      <div class="list">
+        <div>English</div>
+        <div>搜索<span>|</span>留言<span>|</span></div>
+      </div>
+    </header>
+    <div class="search">
+      <input
+        type="text"
+        name=""
+        value=""
+        placeholder="search..."
+        class="input"
+      />
+      <button class="btn">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
   </body>
+  <script src="./index.js"></script>
 </html>
