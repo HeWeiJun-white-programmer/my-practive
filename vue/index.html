@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <p></p>
+    </div>
+
+    <script>
+      let number = 20
+      let vm = {
+        name: 'sadm',
+        age: 132,
+      }
+      Object.defineProperty(vm, 'add', {
+        // value: 12,
+        // enumerable: true, //枚举类型,默认不开启则不遍历
+        // writable: true, //可修改,默认不可修改
+        // configurable: true, //目标属性是否被删除是否再次被修改
+        get() {
+          console.log('1')
+          return number
+        },
+        set(value) {
+          console.log('3')
+          number == value
+        },
+      })
+      console.log(Object.keys(vm))
+    </script>
+  </body>
+</html>
