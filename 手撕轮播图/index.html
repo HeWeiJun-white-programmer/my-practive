@@ -2,43 +2,87 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>手撕轮播图</title>
+
     <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
     <ul class="banner"></ul>
   </body>
   <script>
-    window.addEventListener('load', function () {
+    window.onload = function () {
       let timer = setInterval(get_nex, 3000)
       let sz = new Array()
+      let szdiv = new Array()
       var cur_ul = document.querySelector('.banner')
       console.log(cur_ul)
       // setInterval()
 
-      // 初始化图片
-      for (let i = 0; i < 5; i++) {
-        let cur_li = document.createElement('li')
-        let cur_img = document.createElement('img')
-        cur_img.src = `./image/${i + 1}.jpg`
+      // 初始化图片和下标
+      for (let i = 1; i <= 5; i++) {
+        var cur_li = document.createElement('li')
+        var cur_img = document.createElement('img')
+
+        cur_img.src = `./image/${i}.jpg`
         cur_img.style.width = '400px'
         cur_img.style.height = '200px'
         cur_ul.style.borderradius = '20px'
         cur_li.appendChild(cur_img)
 
+        //鼠标移入停止
+        cur_li.addEventListener('mouseenter', function () {
+          clearInterval(timer)
+        })
+        // 鼠标移出运动
+        cur_li.addEventListener('mouseleave', function () {
+          timer = setInterval(get_nex, 3000)
+        })
+
         cur_ul.appendChild(cur_li)
         sz.push(cur_li)
         sz[sz.length - 1].style.left = '0px'
+
+        // 除最后一个点外，其他的图片和点的顺序是呈len-i的关系，这里就是我们用到的那个name和id的关系，实现可以定位到某张图片
+
+        if (i != 5) {
+          cur_li.id = 5 - i
+        } else {
+          cur_li.id = 5
+        }
+        // 初始化小点
+        let bottom_div = document.createElement('div')
+        bottom_div.style.left = 125 * i + 'px'
+        bottom_div.name = i
+        szdiv.push(bottom_div)
+        cur_ul.appendChild(bottom_div)
       }
+
       // 初始化选择最后三张
       let len = sz.length - 1
-      sz[len - 2].style.left = '0px'
-      sz[len - 1].style.left = '200px'
-      sz[len - 1].style.zIndex = 100
-      sz[len - 1].style.transform = 'scale(1.3)'
-      sz[len].style.left = '400px'
+      szdiv[0].style.background = '#738'
+      function three() {
+        sz[len - 2].style.left = '0px'
+        sz[len - 1].style.left = '200px'
+        sz[len - 1].style.zIndex = 100
+        sz[len - 1].style.transform = 'scale(1.3)'
+        sz[len].style.left = '400px'
+      }
+      // 点击小点移动图片实际上移动的距离就是这样的，我们下面的块和图片的id具有对应关系的，所以移动的距离就是id和name的差值，如果大于0，就是向前移动，困为我们点击的是div,对应的是name，中
+      for (let i = 0; i < szdiv.length; i++) {
+        szdiv[i].onmouseenter = function () {
+          clearInterval(timer)
+          let len1 = sz[len - 1].id
+          let len2 = szdiv[i].name
+          let dis = Math.max(len1, len2) - Math.min(len1, len2)
+          if (len1 > len2) {
+            while (dis--) get_pre()
+          } else {
+            while (dis--) get_nex()
+          }
+          timer = setInterval(get_nex, 3000)
+        }
+      }
+
+      three()
       // 下一页
       function get_nex() {
         let get_up = sz[len]
@@ -46,16 +90,12 @@
         sz.unshift(get_up)
         // 初始化优先级以及排序
         for (let i = 0; i < sz.length; i++) {
-          console.log(sz[i])
+          // console.log(sz[i])
           sz[i].style.zIndex = i
           sz[len].style.transform = 'scale(1)'
         }
-        sz[len - 2].style.left = '0px'
-        sz[len - 1].style.left = '200px'
-        sz[len - 1].style.zIndex = 100
-        sz[len - 1].style.transform = 'scale(1.3)'
-        sz[len - 1].style.opacity = 1
-        sz[len].style.left = '400px'
+        three()
+        swiper()
       }
       // 上一页
       function get_pre() {
@@ -64,16 +104,12 @@
         sz.push(get_up)
         // 初始化
         for (let i = 0; i < sz.length; i++) {
-          console.log(sz[i])
+          // console.log(sz[i])
           sz[i].style.zIndex = i
           sz[len - 2].style.transform = 'scale(1)'
         }
-        sz[len - 2].style.left = '0px'
-        sz[len - 1].style.left = '200px'
-        sz[len - 1].style.zIndex = 100
-        sz[len - 1].style.transform = 'scale(1.3)'
-        sz[len - 1].style.opacity = 1
-        sz[len].style.left = '400px'
+        three()
+        swiper()
       }
       // pre箭头
       let pre_img = document.createElement('img')
@@ -88,10 +124,14 @@
       pre_img.style.height = '50px'
       cur_ul.appendChild(pre_img)
       // 点击右箭头
+      let flag = true
       pre_img.addEventListener('click', function () {
-        clearInterval(timer)
-        get_nex()
-        timer = setInterval(get_nex, 3000)
+        if (flag) {
+          clearInterval(timer)
+          get_nex()
+          swiper()
+          timer = setInterval(get_nex, 3000)
+        }
       })
 
       let nex_img = document.createElement('img')
@@ -106,11 +146,23 @@
       nex_img.style.height = '50px'
       cur_ul.appendChild(nex_img)
       // 点击左键头
+
       nex_img.addEventListener('click', function () {
-        clearInterval(timer)
-        get_pre()
-        timer = setInterval(get_pre, 3000)
+        if (flag) {
+          clearInterval(timer)
+          get_pre()
+          swiper()
+          timer = setInterval(get_nex, 3000)
+        }
       })
-    })
+      //图片滑动的时候点跟着运动
+      function swiper() {
+        for (let i = 0; i < szdiv.length; i++) {
+          if (szdiv[i].name == sz[len - 1].id) {
+            szdiv[i].style.background = '#738'
+          } else szdiv[i].style.background = '#fff'
+        }
+      }
+    }
   </script>
 </html>
