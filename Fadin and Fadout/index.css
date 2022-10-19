@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* body {
+  position: relative;
+} */
+
+.overview img {
+  /*filter:grayscale(1);
+  background-image: url(../手撕轮播图/image/3.jpg);
+  */position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  width: 500px;
+  height: 250px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  animation: fadeIn 5.5s ease-in;
+  -webkit-animation: fadeIn 5.5s ease-in;
+}
+/* .overview img:hover{
+  animation: fadeout 5.5s ease;
+  -webkit-animation: fadeout 5.5s ease;
+} */
+@keyframes fadeIn {
+  0% {
+    left: 0px;
+    opacity: 0;
+  }
+  50% {
+    left: 50%;
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+@keyframes fadeout {
+  0% {
+    left: 50%;
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
