@@ -42,41 +42,45 @@
         sz[sz.length - 1].style.left = '0px'
 
         // 除最后一个点外，其他的图片和点的顺序是呈len-i的关系，这里就是我们用到的那个name和id的关系，实现可以定位到某张图片
-
-        if (i != 5) {
-          cur_li.id = 5 - i
+        cur_li.id = i
+        if (i != 1) {
+          cur_li.id = i - 1
         } else {
           cur_li.id = 5
         }
+        // console.log(cur_li.id)
         // 初始化小点
         let bottom_div = document.createElement('div')
         bottom_div.style.left = 125 * i + 'px'
         bottom_div.name = i
         szdiv.push(bottom_div)
         cur_ul.appendChild(bottom_div)
+        // console.log(szdiv[i]);
       }
 
       // 初始化选择最后三张
       let len = sz.length - 1
       szdiv[0].style.background = '#738'
+      sz[len - 4].style.zIndex = 4
       function three() {
-        sz[len - 2].style.left = '0px'
-        sz[len - 1].style.left = '200px'
-        sz[len - 1].style.zIndex = 100
-        sz[len - 1].style.transform = 'scale(1.3)'
-        sz[len].style.left = '400px'
+        sz[len - 4].style.left = '0px'
+        sz[len - 3].style.left = '200px'
+        sz[len - 3].style.zIndex = 100
+        sz[len - 3].style.transform = 'scale(1.3)'
+        sz[len - 2].style.left = '400px'
       }
       // 点击小点移动图片实际上移动的距离就是这样的，我们下面的块和图片的id具有对应关系的，所以移动的距离就是id和name的差值，如果大于0，就是向前移动，困为我们点击的是div,对应的是name，中
       for (let i = 0; i < szdiv.length; i++) {
+        console.log(typeof szdiv[i].name);
         szdiv[i].onmouseenter = function () {
           clearInterval(timer)
-          let len1 = sz[len - 1].id
+          let len1 = sz[i].id
           let len2 = szdiv[i].name
           let dis = Math.max(len1, len2) - Math.min(len1, len2)
           if (len1 > len2) {
-            while (dis--) get_pre()
+            while (dis--) {get_pre()}
           } else {
-            while (dis--) get_nex()
+            while (dis--) {get_nex()}
           }
           timer = setInterval(get_nex, 3000)
         }
@@ -85,28 +89,28 @@
       three()
       // 下一页
       function get_nex() {
-        let get_up = sz[len]
-        sz.pop()
-        sz.unshift(get_up)
-        // 初始化优先级以及排序
-        for (let i = 0; i < sz.length; i++) {
-          // console.log(sz[i])
-          sz[i].style.zIndex = i
-          sz[len].style.transform = 'scale(1)'
-        }
-        three()
-        swiper()
-      }
-      // 上一页
-      function get_pre() {
         let get_up = sz[0]
         sz.shift()
         sz.push(get_up)
         // 初始化
         for (let i = 0; i < sz.length; i++) {
           // console.log(sz[i])
-          sz[i].style.zIndex = i
-          sz[len - 2].style.transform = 'scale(1)'
+          sz[i].style.zIndex = -i
+          sz[0].style.transform = 'scale(1)'
+        }
+        three()
+        swiper()
+      }
+      // 上一页
+      function get_pre() {
+        let get_up = sz[len]
+        sz.pop()
+        sz.unshift(get_up)
+        // 初始化优先级以及排序
+        for (let i = 0; i < sz.length; i++) {
+          // console.log(sz[i])
+          sz[i].style.zIndex = -i
+          sz[2].style.transform = 'scale(1)'
         }
         three()
         swiper()
@@ -158,7 +162,7 @@
       //图片滑动的时候点跟着运动
       function swiper() {
         for (let i = 0; i < szdiv.length; i++) {
-          if (szdiv[i].name == sz[len - 1].id) {
+          if (szdiv[i].name == sz[len - 3].id) {
             szdiv[i].style.background = '#738'
           } else szdiv[i].style.background = '#fff'
         }
