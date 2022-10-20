@@ -71,9 +71,7 @@
         sz[len - 2].style.left = '400px'
       }
       // 点击小点移动图片实际上移动的距离就是这样的，我们下面的块和图片的id具有对应关系的，所以移动的距离就是id和name的差值，如果大于0，就是向前移动，困为我们点击的是div,对应的是name，中
-      for (let i = 0; i < szdiv.length; i++) {
-        // console.log(sz[i].id)
-        // console.log(szdiv[i].name)
+      szdiv.forEach((value, i) => {
         szdiv[i].onmouseenter = function () {
           clearInterval(timer)
           let len1 = sz[len - 3].id
@@ -87,7 +85,7 @@
           }
           timer = setInterval(get_nex, 3000)
         }
-      }
+      })
 
       three()
       // 下一页
@@ -96,11 +94,11 @@
         sz.shift()
         sz.push(get_up)
         // 初始化
-        for (let i = 0; i < sz.length; i++) {
+        sz.forEach((value, i) => {
           // console.log(sz[i])
           sz[i].style.zIndex = -i
           sz[0].style.transform = 'scale(1)'
-        }
+        })
         three()
         swiper()
       }
@@ -110,11 +108,11 @@
         sz.pop()
         sz.unshift(get_up)
         // 初始化优先级以及排序
-        for (let i = 0; i < sz.length; i++) {
+        sz.forEach((value, i) => {
           // console.log(sz[i])
           sz[i].style.zIndex = -i
           sz[2].style.transform = 'scale(1)'
-        }
+        })
         three()
         swiper()
       }
