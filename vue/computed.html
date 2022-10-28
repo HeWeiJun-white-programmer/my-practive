@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="roow">
+      <input type="" name="" v-model="workvalue" /><br /><br /><br /><br />
+      <ul>
+        <li v-for="(value,index) in newpersons" :key="value.id">
+          {{value.id}}-{{value.name}}
+        </li>
+      </ul>
+    </div>
+    <script>
+      Vue.config.productionTip = false
+      const vm = new Vue({
+        data: {
+          workvalue: '',
+          persons: [
+            { id: 1, name: '何伟骏', age: 13 },
+            { id: 2, name: '海燕', age: 13 },
+            { id: 3, name: '小海燕', age: 13 },
+          ],
+          newpersons: [],
+        },
+
+        watch: {
+          workvalue: {
+            immediate: true,
+            handler(value) {
+              this.newpersons = this.persons.filter((p) => {
+                return p.name.indexOf(value) !== -1
+              })
+            },
+          },
+        },
+      })
+      vm.$mount('#roow')
+    </script>
+  </body>
+</html>
