@@ -1,0 +1,80 @@
+<!--
+ * @Author: 何伟骏
+ * @Date: 2022-11-13 18:35:27
+ * @LastEditors: 何伟骏
+ * @LastEditTime: 2022-11-13 21:23:39
+ * @Description: hello world
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root">
+      <school></school>
+
+      <button type="" @click="n++">点我</button>
+      <p>{{n}}</p>
+      <input type="text" v-fbind:value="n" />
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+    <script>
+      Vue.config.productionTip = false
+      const student = Vue.extend({
+        template: `<h1>{{names}}</h1>`,
+        data() {
+          return {
+            names: '弟弟',
+          }
+        },
+      })
+      const school = Vue.extend({
+        template: `
+        <div>
+          <h1>{{name}}</h1>
+          <student></student>
+          </div>
+        `,
+        data() {
+          return {
+            name: '你好',
+          }
+        },
+        components: {
+          student,
+        },
+      })
+
+      const vm = new Vue({
+        el: '#root',
+        data: {
+          n: 1,
+        },
+        components: {
+          school,
+        },
+        directives: {
+          fbind: {
+            bind(el, binding) {
+              el.value = binding.value
+              console.log('binging')
+            },
+            inserted(el, binding) {
+              el.focus()
+              console.log('binging1')
+            },
+            update(el, binding) {
+              el.value = binding.value
+              el.focus()
+              console.log('binging2')
+            },
+          },
+        },
+      })
+    </script>
+  </body>
+</html>
