@@ -21,7 +21,7 @@ export default {
   methods: {
     add() {
       const todoobj = { id: nanoid(), title: this.title, done: false }
-			if(this.title===''){return false}
+			if(this.title.trim()===''){ return  alert('请输入事件')}
       this.addtodo(todoobj)
 			this.title=''
     },

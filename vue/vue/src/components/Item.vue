@@ -2,7 +2,9 @@
   <div>
     <li>
       <label>
-        <input type="checkbox" :checked="todo.done" />
+				<!-- 不建议修改props的值 -->
+        <!-- <input type="checkbox" v-model="todo.done"  /> -->
+        <input type="checkbox" :checked="todo.done" @change="changechecked(todo.id)" />
 
         <span>{{ todo.title }}</span>
       </label>
@@ -18,7 +20,12 @@ export default {
       titles: '吃饭',
     }
   },
-  props: ['todo'],
+  props: ['todo','checked'],
+	methods:{
+		changechecked(id){
+			this.checked(id)
+		}
+	}
 }
 </script>
 <style scoped>

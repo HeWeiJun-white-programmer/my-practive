@@ -3,7 +3,7 @@
     <div class="todo-container">
       <div class="todo-wrap">
         <MyHeader :addtodo="addtodo" />
-        <Toodlist :todos="todos" />
+        <Toodlist :todos="todos"  :checked="checked"/>
         <MyFooter />
       </div>
     </div>
@@ -29,11 +29,18 @@ export default {
   },
   methods: {
 		// 父组件给子组件传一个带形参函数，然后子组件传实参给父组件 方法一
-		// 方法二 $emit()
-		// 方法三  bus.$emit（）
+		// 方法二 $emit()  子组件传值个父组件
+		// 方法三  bus.$emit（）兄弟组件互相通信
+		// 添加事件
     addtodo(val) {
       this.todos.unshift(val)
     },
+		// 勾选事件,勾选的是当前id的事件则将checked取反,形参为输入的id复选框，实参为勾选的id
+		checked(id){
+			this.todos.filter(item=>{
+				if(item.id===id){item.done=!item.done}
+			})
+		}
   },
 }
 </script>
