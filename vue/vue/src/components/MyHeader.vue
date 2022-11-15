@@ -1,11 +1,21 @@
 <template>
  <div class="todo-header">
-		<input type="text" placeholder="请输入你的任务名称，按回车键确认" />
+		<input type="text" placeholder="请输入你的任务名称，按回车键确认" v-model="title" @keyup.enter="add" />
 	</div>
 </template>
 
 <script>
 export default {
+	data(){
+		return {
+			title:''
+		}
+	},
+	methods:{
+		add(){
+			  const todoobj={id:uuid}
+		}
+	}
 
 }
 </script>

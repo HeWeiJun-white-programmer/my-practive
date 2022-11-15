@@ -2,9 +2,9 @@
   <div>
     <li>
 		<label>
-			<input type="checkbox" />
+			<input type="checkbox" :checked="todo.done" />
 		
-			<span>xxxx</span>
+			<span>{{todo.title}}</span>
 		</label>
 		<button class="btn btn-danger" >删除</button>
 	</li>
@@ -13,7 +13,16 @@
 
 <script>
 export default {
-
+	data(){
+		return {
+			titles:'吃饭'
+		}
+	},
+props:{
+	'todo':{
+		type:String,
+	}
+}
 }
 </script>
 <style scoped>
