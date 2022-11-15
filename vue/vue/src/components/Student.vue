@@ -15,6 +15,7 @@ export default {
       sex: '男',
     }
   },
+
   mixins: ['hun'],
 }
 </script>
