@@ -2,13 +2,19 @@
   <div>
     <li>
       <label>
-				<!-- 不建议修改props的值 -->
+        <!-- 不建议修改props的值 -->
         <!-- <input type="checkbox" v-model="todo.done"  /> -->
-        <input type="checkbox" :checked="todo.done" @change="changechecked(todo.id)" />
+        <input
+          type="checkbox"
+          :checked="todo.done"
+          @change="changechecked(todo.id)"
+        />
 
         <span>{{ todo.title }}</span>
       </label>
-      <button class="btn btn-danger">删除</button>
+      <button class="btn btn-danger" @click.prevent="deleted(todo.id)">
+        删除
+      </button>
     </li>
   </div>
 </template>
@@ -20,12 +26,19 @@ export default {
       titles: '吃饭',
     }
   },
-  props: ['todo','checked'],
-	methods:{
-		changechecked(id){
-			this.checked(id)
-		}
-	}
+  props: ['todo', 'checked', 'deletedone'],
+  methods: {
+    changechecked(id) {
+      console.log(id)
+      this.checked(id)
+    },
+    deleted(id) {
+      if (confirm('确认删除吗')) {
+        console.log(this.todo.length)
+      }
+      this.deletedone(id)
+    },
+  },
 }
 </script>
 <style scoped>

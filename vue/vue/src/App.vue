@@ -3,7 +3,7 @@
     <div class="todo-container">
       <div class="todo-wrap">
         <MyHeader :addtodo="addtodo" />
-        <Toodlist :todos="todos"  :checked="checked"/>
+        <Toodlist :todos="todos"  :checked="checked" :deletedone="deletedone"/>
         <MyFooter />
       </div>
     </div>
@@ -35,11 +35,16 @@ export default {
     addtodo(val) {
       this.todos.unshift(val)
     },
-		// 勾选事件,勾选的是当前id的事件则将checked取反,形参为输入的id复选框，实参为勾选的id
+		// 勾选事件,勾选的是当前id的事件则将checked取反,形参为输入的id复选框，实参为勾选的id(更新数组的属性)
 		checked(id){
-			this.todos.filter(item=>{
+			this.todos.forEach(item=>{
 				if(item.id===id){item.done=!item.done}
 			})
+		},
+    // 过滤当前id（更新数组）
+		deletedone(id){
+				this.todos=this.todos.filter(item=>item.id!==id
+			)
 		}
   },
 }
