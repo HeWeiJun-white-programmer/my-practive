@@ -1,7 +1,7 @@
-export  const hun = {
+export const hun = {
   methods: {
     add() {
-      alert(1)
+      alert(this.name)
     },
   },
 }

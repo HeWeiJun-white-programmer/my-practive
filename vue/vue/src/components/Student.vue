@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { hun } from '../mixin'
 export default {
   data() {
     return {
@@ -15,8 +14,6 @@ export default {
       sex: '男',
     }
   },
-
-  mixins: ['hun'],
 }
 </script>
 <style lang="less" scoped></style>
