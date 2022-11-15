@@ -1,9 +1,8 @@
 <template>
   <div id="app">
-    <School/>
-  
-    <Student @adds='e' />  <h2 >{{name}}</h2>
-  
+    <School />
+
+    <Student />
   </div>
 </template>
 
@@ -12,23 +11,16 @@ import School from './components/SchoolName.vue'
 import Student from './components/Student.vue'
 export default {
   name: 'App',
-  data(){
+  data() {
     return {
-      name:0
+      name: 0,
     }
   },
   components: {
     School,
-    Student
+    Student,
   },
-  methods:{
-    show(){
-      console.log(this.$refs.n.name);
-    },
-    e(e){
-      this.name=e
-    }
-  }
+  methods: {},
 }
 </script>
 

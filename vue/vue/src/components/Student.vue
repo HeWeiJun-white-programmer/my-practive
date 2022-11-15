@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>{{masg}}</h1>
-    <button @click="add">请点击</button>
+    <h1>{{ name }}</h1>
+    <h1>{{ sex }}</h1>
   </div>
 </template>
 
@@ -9,21 +9,12 @@
 export default {
   data() {
     return {
-      masg: 1,
+      name: '张三',
+      sex: '男',
     }
   },
-  props: {
-    name: {
-      type: Number,
-      require: true,
-    },
-  },
-  methods: {
-    add() {
-      this.masg++
-      this.$emit('adds', this.masg)
-    },
-  },
+  props: {},
+  methods: {},
 }
 </script>
 
