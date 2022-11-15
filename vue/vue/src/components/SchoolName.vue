@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>{{ name }}</h1>
-    <h1>{{ sex }}</h1>
+    <h1>学校名字：{{ name }}</h1>
+    <h1>学校地址：{{ add }}</h1>
   </div>
 </template>
 
@@ -13,7 +13,6 @@ export default {
       add: '肇庆',
     }
   },
-  methods: {},
 }
 </script>
 

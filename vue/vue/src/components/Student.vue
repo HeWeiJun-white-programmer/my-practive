@@ -1,11 +1,13 @@
 <template>
   <div>
-    <h1>{{ name }}</h1>
-    <h1>{{ sex }}</h1>
+    <h1>学生名字：{{ name }}</h1>
+    <h1>学生性别：{{ sex }}</h1>
+    <button @click="add">点我</button>
   </div>
 </template>
 
 <script>
+import { hun } from '../mixin'
 export default {
   data() {
     return {
@@ -13,9 +15,7 @@ export default {
       sex: '男',
     }
   },
-  props: {},
-  methods: {},
+  mixins: ['hun'],
 }
 </script>
-
-<style></style>
+<style lang="less" scoped></style>
