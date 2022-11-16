@@ -3,8 +3,8 @@
     <div class="todo-container">
       <div class="todo-wrap">
         <MyHeader :addtodo="addtodo" />
-        <Toodlist :todos="todos"  :checked="checked" :deletedone="deletedone"/>
-        <MyFooter />
+        <Toodlist :todos="todos" :checked="checked" :deletedone="deletedone" />
+        <MyFooter :todos="todos" :Ischecked="Ischecked" :clearall="clearall" />
       </div>
     </div>
   </div>
@@ -28,24 +28,40 @@ export default {
     Toodlist,
   },
   methods: {
-		// 父组件给子组件传一个带形参函数，然后子组件传实参给父组件 方法一
-		// 方法二 $emit()  子组件传值个父组件
-		// 方法三  bus.$emit（）兄弟组件互相通信
-		// 添加事件
+    // 父组件给子组件传一个带形参函数，然后子组件传实参给父组件 方法一
+    // 方法二 $emit()  子组件传值个父组件
+    // 方法三  bus.$emit（）兄弟组件互相通信
+    // 添加事件
     addtodo(val) {
       this.todos.unshift(val)
     },
-		// 勾选事件,勾选的是当前id的事件则将checked取反,形参为输入的id复选框，实参为勾选的id(更新数组的属性)
-		checked(id){
-			this.todos.forEach(item=>{
-				if(item.id===id){item.done=!item.done}
-			})
-		},
+    // 勾选事件,勾选的是当前id的事件则将checked取反,形参为输入的id复选框，实参为勾选的id(更新数组的属性)
+    // 更新原来数组的属性
+    checked(id) {
+      this.todos.forEach((item) => {
+        if (item.id === id) {
+          item.done = !item.done
+        }
+      })
+    },
     // 过滤当前id（更新数组）
-		deletedone(id){
-				this.todos=this.todos.filter(item=>item.id!==id
-			)
-		}
+    deletedone(id) {
+      this.todos = this.todos.filter((item) => {
+        return item.id !== id
+      })
+    },
+    // 全选项,把全选项的done值赋值个所有事件的doen值，更新数组属性和第二个checked()方法一样
+    Ischecked(done) {
+      this.todos.forEach((item) => {
+        item.done = done
+      })
+    },
+    // 清除所有完成的事件，就是把没有完成的事件过滤出来
+    clearall() {
+      this.todos = this.todos.filter((item) => {
+        return !item.done
+      })
+    },
   },
 }
 </script>

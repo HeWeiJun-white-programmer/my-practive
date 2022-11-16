@@ -12,7 +12,7 @@
 
         <span>{{ todo.title }}</span>
       </label>
-      <button class="btn btn-danger" @click.prevent="deleted(todo.id)">
+      <button class="btn btn-danger" @click.prevent="d1eleted(todo.id)">
         删除
       </button>
     </li>
@@ -28,11 +28,12 @@ export default {
   },
   props: ['todo', 'checked', 'deletedone'],
   methods: {
+    // 修改done
     changechecked(id) {
-      console.log(id)
       this.checked(id)
     },
-    deleted(id) {
+    // 删除按钮
+    d1eleted(id) {
       if (confirm('确认删除吗')) {
         console.log(this.todo.length)
       }
