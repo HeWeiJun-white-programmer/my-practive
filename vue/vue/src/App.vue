@@ -2,66 +2,88 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <MyHeader :addtodo="addtodo" />
-        <Toodlist :todos="todos" :checked="checked" :deletedone="deletedone" />
-        <MyFooter :todos="todos" :Ischecked="Ischecked" :clearall="clearall" />
+				<h1 style="text-align:center">欢迎来到海燕的记事本</h1>
+        <MyHeader @addTodo="addTodo" />
+        <MyList :todos="todos" />
+        <MyFooter
+          :todos="todos"
+          @checkAllTodo="checkAllTodo"
+          @clearAllTodo="clearAllTodo"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import MyHeader from './components/MyHeader.vue'
-import MyFooter from './components/MyFooter.vue'
-import Toodlist from './components/Toodlist.vue'
+// import pubsub from 'pubsub-js'
+import MyHeader from './components/MyHeader'
+import MyList from './components/MyList'
+import MyFooter from './components/MyFooter'
 
 export default {
   name: 'App',
+  components: { MyHeader, MyList, MyFooter },
   data() {
     return {
-      todos: [],
+      //由于todos是MyHeader组件和MyFooter组件都在使用，所以放在App中（状态提升）
+      todos: JSON.parse(localStorage.getItem('todos')) || [],
     }
   },
-  components: {
-    MyHeader,
-    MyFooter,
-    Toodlist,
-  },
   methods: {
-    // 父组件给子组件传一个带形参函数，然后子组件传实参给父组件 方法一
-    // 方法二 $emit()  子组件传值个父组件
-    // 方法三  bus.$emit（）兄弟组件互相通信
-    // 添加事件
-    addtodo(val) {
-      this.todos.unshift(val)
+    //添加一个todo
+    addTodo(todoObj) {
+      this.todos.unshift(todoObj)
     },
-    // 勾选事件,勾选的是当前id的事件则将checked取反,形参为输入的id复选框，实参为勾选的id(更新数组的属性)
-    // 更新原来数组的属性
-    checked(id) {
-      this.todos.forEach((item) => {
-        if (item.id === id) {
-          item.done = !item.done
-        }
+    //勾选or取消勾选一个todo
+    checkTodo(id) {
+      this.todos.forEach((todo) => {
+        if (todo.id === id) todo.done = !todo.done
       })
     },
-    // 过滤当前id（更新数组）
-    deletedone(id) {
-      this.todos = this.todos.filter((item) => {
-        return item.id !== id
+    //更新一个todo
+    updateTodo(id, title) {
+      this.todos.forEach((todo) => {
+        if (todo.id === id) todo.title = title
       })
     },
-    // 全选项,把全选项的done值赋值个所有事件的doen值，更新数组属性和第二个checked()方法一样
-    Ischecked(done) {
-      this.todos.forEach((item) => {
-        item.done = done
+    //删除一个todo
+    deleteTodo(id) {
+      this.todos = this.todos.filter((todo) => todo.id !== id)
+    },
+    //全选or取消全选
+    checkAllTodo(done) {
+      this.todos.forEach((todo) => {
+        todo.done = done
       })
     },
-    // 清除所有完成的事件，就是把没有完成的事件过滤出来
-    clearall() {
-      this.todos = this.todos.filter((item) => {
-        return !item.done
+    //清除所有已经完成的todo
+    clearAllTodo() {
+      this.todos = this.todos.filter((todo) => {
+        return !todo.done
       })
     },
+  },
+  watch: {
+    todos: {
+      deep: true,
+      handler(value) {
+        localStorage.setItem('todos', JSON.stringify(value))
+      },
+    },
+  },
+  mounted() {
+    this.$bus.$on('checkTodo', this.checkTodo)
+    this.$bus.$on('updateTodo', this.updateTodo)
+    this.$bus.$on('deleteTodo', this.deleteTodo)
+
+    // this.pubId = pubsub.subscribe('deleteTodo',this.deleteTodo)
+  },
+  beforeDestroy() {
+    this.$bus.$off('checkTodo')
+    this.$bus.$off('updateTodo')
+    this.$bus.$off('deleteTodo')
+    // pubsub.unsubscribe(this.pubId)
   },
 }
 </script>
@@ -88,6 +110,12 @@ body {
   color: #fff;
   background-color: #da4f49;
   border: 1px solid #bd362f;
+}
+.btn-edit {
+  color: #fff;
+  background-color: skyblue;
+  border: 1px solid rgb(103, 159, 180);
+  margin-right: 5px;
 }
 .btn-danger:hover {
   color: #fff;

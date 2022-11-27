@@ -1,88 +1,85 @@
 <template>
-  <div class="todo-footer" v-show="todoall">
-    <label>
-      <!-- <input type="checkbox" :checked="isAll" @change="checkAll"/> -->
-      <!-- <input type="checkbox" :checked="todoalls" @change="changed" /> -->
-      <!-- 利用vmodel -->
-      <input type="checkbox" v-model="todoalls" />
-    </label>
-    <span>
-      <span>已完成{{ totaldone }}</span> / 全部{{ todoall }}
-    </span>
-    <button class="btn btn-danger" @click="clearall">清除已完成任务</button>
-  </div>
+	<div class="todo-footer" v-show="total">
+		<label>
+			<!-- <input type="checkbox" :checked="isAll" @change="checkAll"/> -->
+			<input type="checkbox" v-model="isAll"/>
+		</label>
+		<span>
+			<span>已完成{{doneTotal}}</span> / 全部{{total}}
+		</span>
+		<button class="btn btn-danger" @click="clearAll">清除已完成任务</button>
+	</div>
 </template>
 
 <script>
-export default {
-  props: ['todos', 'Ischecked', 'clearall'],
-  computed: {
-    // 全部属性
-    todoall() {
-      return this.todos.length
-    },
-    //过滤出done1为true的数组 计算总数
-    totaldone() {
-      // return this.todos.filter((item) => item.done).length
-      //过滤出done1为true的数组
-      return this.todos.reduce((pre, item) => {
-        // console.log(item.index)
-        if (item.done) {
-          return pre + 1
-        }
-        return pre
-      }, 0)
-      // let arr=[1,2,3,4,5]
-      // return arr.reduce((toals,item,index)=>{console.log(`${toals} ${item}  ${index} `);     return toals=toals+item},0)
-    },
-    // 全选按钮
-    todoalls: {
-      get() {
-        return this.totaldone === this.todoall && this.totaldone > 0
-      },
-      set(val) {
-        this.Ischecked(val)
-      },
-    },
-  },
-  methods: {
-    // changed(e) {
-    //   // console.log(e.target.checked);
-    //   this.Ischecked(e.target.checked)
-    // },
-    Clearall() {
-      if (confirm('确认删除吗')) {
-        this.clearall()
-      }
-    },
-  },
-}
+	export default {
+		name:'MyFooter',
+		props:['todos'],
+		computed: {
+			//总数
+			total(){
+				return this.todos.length
+			},
+			//已完成数
+			doneTotal(){
+				//此处使用reduce方法做条件统计
+				/* const x = this.todos.reduce((pre,current)=>{
+					console.log('@',pre,current)
+					return pre + (current.done ? 1 : 0)
+				},0) */
+				//简写
+				return this.todos.reduce((pre,todo)=> pre + (todo.done ? 1 : 0) ,0)
+			},
+			//控制全选框
+			isAll:{
+				//全选框是否勾选
+				get(){
+					return this.doneTotal === this.total && this.total > 0
+				},
+				//isAll被修改时set被调用
+				set(value){
+					// this.checkAllTodo(value)
+					this.$emit('checkAllTodo',value)
+				}
+			}
+		},
+		methods: {
+			/* checkAll(e){
+				this.checkAllTodo(e.target.checked)
+			} */
+			//清空所有已完成
+			clearAll(){
+				// this.clearAllTodo()
+				this.$emit('clearAllTodo')
+			}
+		},
+	}
 </script>
 
 <style scoped>
-/*footer*/
-.todo-footer {
-  height: 40px;
-  line-height: 40px;
-  padding-left: 6px;
-  margin-top: 5px;
-}
+	/*footer*/
+	.todo-footer {
+		height: 40px;
+		line-height: 40px;
+		padding-left: 6px;
+		margin-top: 5px;
+	}
 
-.todo-footer label {
-  display: inline-block;
-  margin-right: 20px;
-  cursor: pointer;
-}
+	.todo-footer label {
+		display: inline-block;
+		margin-right: 20px;
+		cursor: pointer;
+	}
 
-.todo-footer label input {
-  position: relative;
-  top: -1px;
-  vertical-align: middle;
-  margin-right: 5px;
-}
+	.todo-footer label input {
+		position: relative;
+		top: -1px;
+		vertical-align: middle;
+		margin-right: 5px;
+	}
 
-.todo-footer button {
-  float: right;
-  margin-top: 5px;
-}
+	.todo-footer button {
+		float: right;
+		margin-top: 5px;
+	}
 </style>
